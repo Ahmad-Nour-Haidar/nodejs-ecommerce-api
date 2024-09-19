@@ -10,6 +10,8 @@ require('./config/database')();
 
 const app = express();
 
+app.use(express.json());
+
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
     console.log(`Mode: ${process.env.NODE_ENV}`);
