@@ -1,7 +1,8 @@
 const {
     getCategories,
     createCategory,
-    getCategory
+    getCategory,
+    updateCategory
 } = require('../services/category_services')
 
 const express = require('express');
@@ -14,5 +15,6 @@ router.route('/')
 
 router.route('/:id')
     .get(getCategory)
+    .put(updateCategory);
 
 module.exports = router;
