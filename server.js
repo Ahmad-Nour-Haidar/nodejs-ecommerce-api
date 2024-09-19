@@ -17,10 +17,9 @@ if (process.env.NODE_ENV === 'development') {
     console.log(`Mode: ${process.env.NODE_ENV}`);
 }
 
-// routes
+// Mount Routes
 
-app.use('api/v1/categories', categoryRoutes);
-
+app.use('/api/v1/categories', categoryRoutes);
 
 // express listening
 
