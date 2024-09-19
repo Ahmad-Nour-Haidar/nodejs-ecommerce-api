@@ -2,6 +2,8 @@ require('dotenv').config();
 const morgan = require('morgan');
 const express = require('express');
 const ApiError = require('./utils/api_error');
+const globalError = require('./middlewares/error_middleware');
+
 const categoryRoutes = require('./routes/category_routes');
 
 
@@ -25,12 +27,7 @@ app.all('*', (req, res, next) => {
     next(new ApiError(`Can't find this route: ${req.originalUrl}`, 404));
 });
 
-app.use((err, req, res, next) => {
-    return res.status(err.statusCode).json({
-        status: err.status,
-        message: err.message,
-    });
-});
+app.use(globalError);
 
 // express listening
 
