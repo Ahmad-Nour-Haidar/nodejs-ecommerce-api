@@ -1,0 +1,14 @@
+npm init --yes
+
+
+
+🎉 Finish
+🚚 Work in
+➕ Add
+✨ Add
+🔨 Refactor code
+🐛 Fix bugs
+🔨 Refactor code - 🐛 Fix bugs
+✏️	Rename / move a file(s) / folder(s)
+✏️	Move files
+✏️	Move folder
