@@ -1,7 +1,7 @@
 require('dotenv').config();
 const morgan = require('morgan');
 const express = require('express');
-
+const ApiError = require('./utils/api_error');
 const categoryRoutes = require('./routes/category_routes');
 
 
@@ -20,6 +20,17 @@ if (process.env.NODE_ENV === 'development') {
 // Mount Routes
 
 app.use('/api/v1/categories', categoryRoutes);
+
+app.all('*', (req, res, next) => {
+    next(new ApiError(`Can't find this route: ${req.originalUrl}`, 404));
+});
+
+app.use((err, req, res, next) => {
+    return res.status(err.statusCode).json({
+        status: err.status,
+        message: err.message,
+    });
+});
 
 // express listening
 
