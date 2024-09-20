@@ -6,7 +6,6 @@ const globalError = require('./middlewares/error_middleware');
 
 const categoryRoutes = require('./routes/category_routes');
 
-
 // db connection
 require('./config/database')();
 
@@ -33,6 +32,15 @@ app.use(globalError);
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}...`);
+});
+
+// Handle rejection outside express
+process.on('unhandledRejection', (err) => {
+    console.error(`UnhandledRejection Errors: ${err.name} | ${err.message}`);
+    server.close(() => {
+        console.error(`Shutting down....`);
+        process.exit(1);
+    });
 });
