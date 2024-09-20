@@ -1,4 +1,8 @@
 const {
+    getCategoryValidator,
+} = require('../utils/validators/category_validator');
+
+const {
     getCategories,
     createCategory,
     getCategory,
@@ -15,7 +19,7 @@ router.route('/')
     .post(createCategory);
 
 router.route('/:id')
-    .get(getCategory)
+    .get(getCategoryValidator, getCategory)
     .put(updateCategory)
     .delete(deleteCategory);
 
