@@ -4,9 +4,10 @@ const express = require('express');
 const ApiError = require('./utils/api_error');
 const globalError = require('./middlewares/error_middleware');
 
+// Routes
 const categoryRoutes = require('./routes/category_routes');
 const subCategoryRoute = require('./routes/subcategory_routes');
-
+const brandRoute = require('./routes/brand_route');
 
 // db connection
 require('./config/database')();
@@ -23,6 +24,7 @@ if (process.env.NODE_ENV === 'development') {
 // Mount Routes
 app.use('/api/v1/categories', categoryRoutes);
 app.use('/api/v1/subcategories', subCategoryRoute);
+app.use('/api/v1/brands', brandRoute);
 
 app.all('/', (req, res, next) => {
     next(new ApiError(`Can't find this route: ${req.originalUrl}`, 404));
