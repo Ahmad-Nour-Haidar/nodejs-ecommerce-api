@@ -14,7 +14,8 @@ exports.getSubCategories = asyncHandler(async (req, res) => {
 
     const subCategories = await SubCategory.find()
         .skip(skip)
-        .limit(limit);
+        .limit(limit)
+        .populate({path: 'category', select: 'name -_id'});
 
     res
         .status(200)
@@ -26,7 +27,9 @@ exports.getSubCategories = asyncHandler(async (req, res) => {
 // @access  Public
 exports.getSubCategory = asyncHandler(async (req, res, next) => {
     const {id} = req.params;
-    const subCategory = await SubCategory.findById(id);
+    const subCategory = await SubCategory.findById(id)
+        .populate({path: 'category', select: 'name -_id'});
+
 
     if (!subCategory) {
         return next(new ApiError(`No subcategory for this id ${id}`, 404));
