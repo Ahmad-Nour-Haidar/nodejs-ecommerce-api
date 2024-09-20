@@ -1,5 +1,5 @@
 const slugify = require('slugify');
-const asyncHandler = require('express-async-handlr')
+const asyncHandler = require('express-async-handler');
 const ApiError = require('../utils/api_error');
 const Category = require('../models/category_model');
 
@@ -24,7 +24,7 @@ exports.getCategory = asyncHandler(async (req, res, next) => {
     if (!category) {
         return next(new ApiError(`No category for this id ${id}`, 404));
     }
-    res.status(200).json({data: category});
+    res.status(200).json({category});
 });
 
 
