@@ -3,8 +3,10 @@ const asyncHandler = require('express-async-handler');
 const ApiError = require('../utils/api_error');
 
 const SubCategory = require('../models/sub_category_model');
-const Category = require("../models/category_model");
+
 const ApiFeatures = require("../utils/api_features");
+
+const factory = require('./handlers_factory');
 
 exports.setCategoryIdToBody = (req, res, next) => {
     // Nested route
@@ -35,8 +37,8 @@ exports.getSubCategories = asyncHandler(async (req, res) => {
     const countDocuments = await SubCategory.countDocuments();
     const apiFeature = new ApiFeatures(SubCategory.find(), req.query)
         .paginate(countDocuments)
+        .search()
         .filter()
-        // .search()
         .limitFields()
         .sort();
 
@@ -98,9 +100,5 @@ exports.updateSubCategory = asyncHandler(async (req, res) => {
 // @desc    Delete specific subCategory
 // @route   DELETE /api/v1/subcategories/:id
 // @access  Private
-exports.deleteSubCategory = asyncHandler(async (req, res) => {
-    const {id} = req.params;
-    const subCategory = await SubCategory.findByIdAndDelete(id);
 
-    res.status(204).send();
-});
+exports.deleteBrand = factory.deleteOne(SubCategory);

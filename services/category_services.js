@@ -4,6 +4,8 @@ const ApiError = require('../utils/api_error');
 const Category = require('../models/category_model');
 const ApiFeatures = require("../utils/api_features");
 
+const factory = require('./handlers_factory');
+
 // @desc    Get list of categories
 // @route   GET /api/v1/categories
 // @access  Public
@@ -71,12 +73,5 @@ exports.updateCategory = asyncHandler(async (req, res, next) => {
 // @desc    Delete specific category
 // @route   DELETE /api/v1/categories/:id
 // @access  Private
-exports.deleteCategory = asyncHandler(async (req, res, next) => {
-    const id = req.params.id;
-    const category = await Category.findByIdAndDelete(id);
 
-    if (!category) {
-        return next(new ApiError(`No category for this id ${id}`, 404));
-    }
-    res.status(204).send();
-});
+exports.deleteBrand = factory.deleteOne(Category);

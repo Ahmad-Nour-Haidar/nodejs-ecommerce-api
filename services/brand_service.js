@@ -5,6 +5,8 @@ const ApiError = require('../utils/api_error');
 const Brand = require('../models/brand_model');
 const ApiFeatures = require("../utils/api_features");
 
+const factory = require('./handlers_factory');
+
 // @desc    Get list of brands
 // @route   GET /api/v1/brands
 // @access  Public
@@ -71,12 +73,5 @@ exports.updateBrand = asyncHandler(async (req, res, next) => {
 // @desc    Delete specific brand
 // @route   DELETE /api/v1/brands/:id
 // @access  Private
-exports.deleteBrand = asyncHandler(async (req, res, next) => {
-    const {id} = req.params;
-    const brand = await Brand.findByIdAndDelete(id);
 
-    if (!brand) {
-        return next(new ApiError(`No brand for this id ${id}`, 404));
-    }
-    res.status(204).send();
-});
+exports.deleteBrand = factory.deleteOne(Brand);
