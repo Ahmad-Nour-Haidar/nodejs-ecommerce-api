@@ -46,8 +46,9 @@ exports.createProduct = asyncHandler(async (req, res) => {
 exports.updateProduct = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
 
-    req.body.slug = slugify(req.body.title);
-
+    if (req.body.title) {
+        req.body.slug = slugify(req.body.title);
+    }
     const product = await Product.findOneAndUpdate(
         {_id: id},
         req.body,
