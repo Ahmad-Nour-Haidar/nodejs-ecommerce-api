@@ -28,12 +28,6 @@ exports.createFilterObj = (req, res, next) => {
 // @access  Public
 exports.getSubCategories = asyncHandler(async (req, res) => {
 
-    // const s = await SubCategory.find({name: {$regex: 'Foods', $options: 'i'}});
-    //
-    // return res.status(200).json({
-    //     s
-    // });
-
     const countDocuments = await SubCategory.countDocuments();
     const apiFeature = new ApiFeatures(SubCategory.find(), req.query)
         .paginate(countDocuments)
@@ -60,10 +54,10 @@ exports.getSubCategory = asyncHandler(async (req, res, next) => {
     const subCategory = await SubCategory.findById(id)
         .populate({path: 'category', select: 'name -_id'});
 
-
     if (!subCategory) {
         return next(new ApiError(`No subcategory for this id ${id}`, 404));
     }
+
     res.status(200).json({data: subCategory});
 })
 
@@ -77,28 +71,16 @@ exports.createSubCategory = asyncHandler(async (req, res) => {
         slug: slugify(name),
         category,
     });
+
     res.status(201).json({data: subCategory});
 });
 
 // @desc    Update specific subcategory
 // @route   PUT /api/v1/subcategories/:id
 // @access  Private
-exports.updateSubCategory = asyncHandler(async (req, res) => {
-    const {id} = req.params;
-    const {name, category} = req.body;
-
-    const subCategory = await SubCategory.findOneAndUpdate(
-        {_id: id},
-        {name, slug: slugify(name), category},
-        {new: true}
-    );
-
-
-    res.status(200).json({data: subCategory});
-});
-
+exports.updateSubCategory = factory.updateOne(SubCategory);
 // @desc    Delete specific subCategory
 // @route   DELETE /api/v1/subcategories/:id
 // @access  Private
 
-exports.deleteBrand = factory.deleteOne(SubCategory);
+exports.deleteSubCategory = factory.deleteOne(SubCategory);
