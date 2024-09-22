@@ -85,13 +85,12 @@ const setImageURL = (doc) => {
         doc.imageCover = `${process.env.BASE_URL}/products/${doc.imageCover}`;
     }
     if (doc.images) {
-        console.log(`doc.images.length = ${doc.images.length}`)
-        const imagesList = [];
-        doc.images.forEach((image) => {
-            const imageUrl = `${process.env.BASE_URL}/products/${image}`;
-            imagesList.push(imageUrl);
-        });
-        doc.images = imagesList;
+        // console.log(`doc.images = ${doc.images}`);
+        const length = doc.images.length;
+        for (let i = 0; i < length; i++) {
+            doc.images[i] = `${process.env.BASE_URL}/products/${doc.images[i]}`;
+        }
+        // console.log(`doc.images after = ${doc.images}`);
     }
 };
 // findOne, findAll and update
