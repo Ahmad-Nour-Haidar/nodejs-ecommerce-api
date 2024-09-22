@@ -64,16 +64,7 @@ exports.getSubCategory = asyncHandler(async (req, res, next) => {
 // @desc    Create subCategory
 // @route   POST  /api/v1/subcategories
 // @access  Private
-exports.createSubCategory = asyncHandler(async (req, res) => {
-    const {name, category} = req.body;
-    const subCategory = await SubCategory.create({
-        name,
-        slug: slugify(name),
-        category,
-    });
-
-    res.status(201).json({data: subCategory});
-});
+exports.createSubCategory = factory.createOne(SubCategory);
 
 // @desc    Update specific subcategory
 // @route   PUT /api/v1/subcategories/:id
