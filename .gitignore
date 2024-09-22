@@ -65,6 +65,7 @@ typings/
 # Gatsby files
 .cache/
 public/
+uploads/
 
 # Vuepress build output
 .vuepress/dist

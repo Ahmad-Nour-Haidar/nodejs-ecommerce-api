@@ -1,3 +1,5 @@
+const path = require("path");
+
 require('dotenv').config();
 const morgan = require('morgan');
 const express = require('express');
@@ -17,6 +19,7 @@ require('./config/database')();
 const app = express();
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));

@@ -16,18 +16,20 @@ exports.createCategoryValidator = [
         .isLength({max: 32})
         .withMessage('Too long category name')
         .custom((val, {req}) => {
-        req.body.slug = slugify(val);
-        return true;
-    }),
+            req.body.slug = slugify(val);
+            return true;
+        }),
     validatorMiddleware,
 ];
 
 exports.updateCategoryValidator = [
     check('id').isMongoId().withMessage('Invalid category id format'),
-    body('name').custom((val, {req}) => {
-        req.body.slug = slugify(val);
-        return true;
-    }),
+    body('name')
+        .optional()
+        .custom((val, {req}) => {
+            req.body.slug = slugify(val);
+            return true;
+        }),
     validatorMiddleware,
 ];
 
