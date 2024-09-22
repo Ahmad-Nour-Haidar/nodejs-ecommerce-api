@@ -49,17 +49,7 @@ exports.getSubCategories = asyncHandler(async (req, res) => {
 // @desc    Get specific subcategory by id
 // @route   GET /api/v1/subcategories/:id
 // @access  Public
-exports.getSubCategory = asyncHandler(async (req, res, next) => {
-    const {id} = req.params;
-    const subCategory = await SubCategory.findById(id)
-        .populate({path: 'category', select: 'name -_id'});
-
-    if (!subCategory) {
-        return next(new ApiError(`No subcategory for this id ${id}`, 404));
-    }
-
-    res.status(200).json({data: subCategory});
-})
+exports.getSubCategory = factory.getOne(SubCategory);
 
 // @desc    Create subCategory
 // @route   POST  /api/v1/subcategories
