@@ -17,7 +17,7 @@ exports.signup = asyncHandler(async (req, res, next) => {
     });
 
     // 2- Generate token
-    const token = user.signAuthToken();
+    const token = user.createToken();
 
     res.status(201).json({user, token});
 });
@@ -31,8 +31,23 @@ exports.login = asyncHandler(async (req, res, next) => {
         return next(new ApiError('Incorrect email or password', 401));
     }
     // 3) generate token
-    const token = user.signAuthToken();
+    const token = user.createToken();
 
     // 4) send response to client side
     res.status(200).json({user, token});
+});
+
+// @desc   make sure the user is logged in
+exports.protect = asyncHandler(async (req, res, next) => {
+    // 1) Check if token exist, if exist get
+    let token;
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+    ) {
+        token = req.headers.authorization.split(' ')[1];
+    }
+    if (!token) {
+        return next(new ApiError('You are not login, Please login to get access this route', 401));
+    }
 });
