@@ -27,7 +27,14 @@ const authService = require('../services/auth_service');
 
 router.route('/')
     .get(authService.protect, getCategories)
-    .post(uploadCategoryImage, resizeImage, createCategoryValidator, createCategory);
+    .post(
+        authService.protect,
+        authService.allowedTo('admin', 'manager'),
+        uploadCategoryImage,
+        resizeImage,
+        createCategoryValidator,
+        createCategory
+    );
 
 router.route('/:id')
     .get(getCategoryValidator, getCategory)
