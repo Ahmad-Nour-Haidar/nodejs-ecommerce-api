@@ -31,6 +31,8 @@ const userSchema = new mongoose.Schema(
             minlength: [6, 'Too short password'],
         },
 
+        passwordChangedAt: Date,
+
         role: {
             type: String,
             enum: ['user', 'admin'],
