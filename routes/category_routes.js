@@ -23,8 +23,10 @@ const router = express.Router();
 
 router.use('/:categoryId/subcategories', subcategoriesRoute);
 
+const authService = require('../services/auth_service');
+
 router.route('/')
-    .get(getCategories)
+    .get(authService.protect, getCategories)
     .post(uploadCategoryImage, resizeImage, createCategoryValidator, createCategory);
 
 router.route('/:id')
