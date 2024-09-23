@@ -91,6 +91,17 @@ exports.changeUserPassword = asyncHandler(async (req, res, next) => {
     res.status(200).json({data: document});
 });
 
+
+// @desc    Get Logged user data
+// @route   GET /api/v1/users/get-me
+// @access  Private/Protect
+exports.getLoggedUserData = asyncHandler(async (req, res, next) => {
+    console.log(req.user);
+
+    req.params.id = req.user.userId;
+    next();
+});
+
 // @desc    Delete specific user
 // @route   DELETE /api/v1/users/:id
 // @access  Private/Admin
