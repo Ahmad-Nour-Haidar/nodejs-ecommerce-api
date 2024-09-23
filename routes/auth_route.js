@@ -9,6 +9,7 @@ const {
     signup,
     login,
     forgotPassword,
+    verifyPassResetCode,
 } = require('../services/auth_service');
 
 const router = express.Router();
@@ -16,5 +17,6 @@ const router = express.Router();
 router.post('/signup', signupValidator, signup);
 router.post('/login', loginValidator, login);
 router.post('/forgot-password', forgotPassword);
+router.post('/verify-reset-code', verifyPassResetCode);
 
 module.exports = router;
