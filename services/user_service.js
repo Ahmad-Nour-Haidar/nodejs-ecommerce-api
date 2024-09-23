@@ -96,9 +96,7 @@ exports.changeUserPassword = asyncHandler(async (req, res, next) => {
 // @route   GET /api/v1/users/get-me
 // @access  Private/Protect
 exports.getLoggedUserData = asyncHandler(async (req, res, next) => {
-    console.log(req.user);
-
-    req.params.id = req.user.userId;
+    req.params.id = req.user._id;
     next();
 });
 

@@ -24,21 +24,14 @@ const authService = require('../services/auth_service');
 
 const router = express.Router();
 
-// router.use(authService.protect);
+router.use(authService.protect);
 
-router.get('/get-me', (req,res)=>{
-    console.log("req");
-    res.status(200).send("hello")
-});
+router.get('/get-me', getLoggedUserData, getUser);
 
 // Admin
-// router.use(authService.allowedTo('admin', 'manager'));
+router.use(authService.allowedTo('admin', 'manager'));
 
-router.put(
-    '/change-password/:id',
-    changeUserPasswordValidator,
-    changeUserPassword
-);
+router.put('/change-password/:id', changeUserPasswordValidator, changeUserPassword);
 
 router
     .route('/')
