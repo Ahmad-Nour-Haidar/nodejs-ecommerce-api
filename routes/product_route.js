@@ -17,8 +17,14 @@ const {
 } = require('../services/product_services');
 
 const authService = require('../services/auth_service');
+const reviewsRoute = require('./review_route');
 
 const router = express.Router();
+
+// POST   /products/jkshjhsdjh2332n/reviews
+// GET    /products/jkshjhsdjh2332n/reviews
+// GET    /products/jkshjhsdjh2332n/reviews/87487sfww3
+router.use('/:productId/reviews', reviewsRoute);
 
 router
     .route('/')

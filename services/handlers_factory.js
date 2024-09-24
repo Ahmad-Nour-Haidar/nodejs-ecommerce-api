@@ -78,7 +78,7 @@ exports.getAll = (Model, modelName = '') =>
             .status(200)
             .json({
                 results: documents.length,
-                paginationResult,
+                pagination: paginationResult,
                 [Model.modelName]: documents
             });
     });
