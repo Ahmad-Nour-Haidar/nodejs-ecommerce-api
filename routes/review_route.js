@@ -1,6 +1,14 @@
 const express = require('express');
 
 const {
+    createReviewValidator,
+    updateReviewValidator,
+    getReviewValidator,
+    deleteReviewValidator,
+} = require('../utils/validators/review_validator');
+
+
+const {
     getReview,
     getReviews,
     createReview,
@@ -10,7 +18,7 @@ const {
 
 const authService = require('../services/auth_service');
 
-const router = express.Router({ mergeParams: true });
+const router = express.Router({mergeParams: true});
 
 router
     .route('/')
@@ -18,21 +26,26 @@ router
     .post(
         authService.protect,
         authService.allowedTo('user'),
+        createReviewValidator,
         createReview
     );
 
 router
     .route('/:id')
-    .get(getReview)
-
+    .get(
+        getReviewValidator,
+        getReview
+    )
     .put(
         authService.protect,
         authService.allowedTo('user'),
+        updateReviewValidator,
         updateReview
     )
     .delete(
         authService.protect,
         authService.allowedTo('user', 'manager', 'admin'),
+        deleteReviewValidator,
         deleteReview
     );
 
