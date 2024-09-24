@@ -74,7 +74,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 // @route   DELETE /api/v1/users/change-password/:id
 // @access  Private/Admin
 exports.changeUserPassword = asyncHandler(async (req, res, next) => {
-    const document = await User.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
         req.params.id,
         {
             password: await bcrypt.hash(req.body.password, 12),
@@ -85,10 +85,10 @@ exports.changeUserPassword = asyncHandler(async (req, res, next) => {
         }
     );
 
-    if (!document) {
-        return next(new ApiError(`No document for this id ${req.params.id}`, 404));
+    if (!user) {
+        return next(new ApiError(`No user for this id ${req.params.id}`, 404));
     }
-    res.status(200).json({data: document});
+    res.status(200).json({user});
 });
 
 
@@ -99,6 +99,29 @@ exports.getLoggedUserData = asyncHandler(async (req, res, next) => {
     req.params.id = req.user._id;
     next();
 });
+
+// @desc    Update logged user password
+// @route   PUT /api/v1/users/update-my-password
+// @access  Private/Protect
+exports.updateLoggedUserPassword = asyncHandler(async (req, res, next) => {
+    // 1) Update user password based user payload (req.user._id)
+    const user = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            password: await bcrypt.hash(req.body.password, 12),
+            passwordChangedAt: Date.now(),
+        },
+        {
+            new: true,
+        }
+    );
+
+    // 2) Generate token
+    const token = user.createToken();
+
+    res.status(200).json({user, token});
+});
+
 
 // @desc    Delete specific user
 // @route   DELETE /api/v1/users/:id
