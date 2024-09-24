@@ -25,13 +25,15 @@ exports.updateOne = (Model) =>
                 new ApiError(`No document for this id ${req.params.id}`, 404)
             );
         }
-        res.status(200).json({data: document});
+        res.status(200).json({
+            [Model.modelName]: document
+        });
     });
 
 exports.createOne = (Model) =>
     asyncHandler(async (req, res) => {
         const document = await Model.create(req.body);
-        res.status(201).json({document});
+        res.status(201).json({[Model.modelName]: document});
     });
 
 exports.getOne = (Model) =>
@@ -41,7 +43,7 @@ exports.getOne = (Model) =>
         if (!document) {
             return next(new ApiError(`No document for this id ${id}`, 404));
         }
-        res.status(200).json({document});
+        res.status(200).json({[Model.modelName]: document});
     });
 
 exports.getAll = (Model, modelName = '') =>
@@ -65,5 +67,9 @@ exports.getAll = (Model, modelName = '') =>
 
         res
             .status(200)
-            .json({results: documents.length, paginationResult, data: documents});
+            .json({
+                results: documents.length,
+                paginationResult,
+                [Model.modelName]: documents
+            });
     });
