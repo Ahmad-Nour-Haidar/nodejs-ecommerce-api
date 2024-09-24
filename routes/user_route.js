@@ -5,6 +5,7 @@ const {
     updateUserValidator,
     deleteUserValidator,
     changeUserPasswordValidator,
+    updateLoggedUserValidator
 } = require('../utils/validators/user_validator');
 
 const {
@@ -18,6 +19,7 @@ const {
     changeUserPassword,
     getLoggedUserData,
     updateLoggedUserPassword,
+    updateLoggedUserData,
 
 } = require('../services/user_service');
 
@@ -29,6 +31,7 @@ router.use(authService.protect);
 
 router.get('/get-me', getLoggedUserData, getUser);
 router.put('/change-my-password', updateLoggedUserPassword);
+router.put('/update-me', updateLoggedUserValidator, updateLoggedUserData);
 
 // Admin
 router.use(authService.allowedTo('admin', 'manager'));

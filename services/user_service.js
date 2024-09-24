@@ -122,6 +122,23 @@ exports.updateLoggedUserPassword = asyncHandler(async (req, res, next) => {
     res.status(200).json({user, token});
 });
 
+// @desc    Update logged user data (without password, role)
+// @route   PUT /api/v1/users/update-me
+// @access  Private/Protect
+exports.updateLoggedUserData = asyncHandler(async (req, res, next) => {
+    const user = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            name: req.body.name,
+            slug: req.body.slug,
+            email: req.body.email,
+            phone: req.body.phone,
+        },
+        {new: true}
+    );
+
+    res.status(200).json({user});
+});
 
 // @desc    Delete specific user
 // @route   DELETE /api/v1/users/:id
