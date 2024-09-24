@@ -23,7 +23,9 @@ const reviewSchema = new mongoose.Schema(
             required: [true, 'Review must belong to product'],
         },
     },
-    {timestamps: true}
+    {
+        timestamps: true
+    }
 );
 
 reviewSchema.pre(/^find/, function (next) {
