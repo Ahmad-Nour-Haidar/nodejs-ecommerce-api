@@ -2,17 +2,46 @@ const asyncHandler = require('express-async-handler');
 const ApiError = require('../utils/api_error');
 const ApiFeatures = require('../utils/api_features');
 
+// exports.deleteOne = (Model) =>
+//     asyncHandler(async (req, res, next) => {
+//         const {id} = req.params;
+//         const document = await Model.findByIdAndDelete(id);
+//
+//         if (!document) {
+//             return next(new ApiError(`No document for this id ${id}`, 404));
+//         }
+//
+//         // // Trigger "remove" event when update document
+//         document.deleteOne();
+//
+//         res.status(204).send();
+//     });
+
 exports.deleteOne = (Model) =>
     asyncHandler(async (req, res, next) => {
-        const {id} = req.params;
-        const document = await Model.findByIdAndDelete(id);
+        const { id } = req.params;
+
+        // Retrieve the document first
+        const document = await Model.findById(id);
 
         if (!document) {
-            return next(new ApiError(`No document for this id ${id}`, 404));
+            return next(new ApiError(`No document found for this id ${id}`, 404));
+        }
+
+        // Extract relevant fields before deletion
+        const productId = document.product; // Assuming `product` field exists for models like Review
+
+        // Call .deleteOne() to delete the document
+        await document.deleteOne();
+
+        // If the model has a calcAverageRatingsAndQuantity static method, call it
+        if (typeof Model.calcAverageRatingsAndQuantity === 'function' && productId) {
+            await Model.calcAverageRatingsAndQuantity(productId);
         }
 
         res.status(204).send();
     });
+
 
 exports.updateOne = (Model) =>
     asyncHandler(async (req, res, next) => {
@@ -25,6 +54,10 @@ exports.updateOne = (Model) =>
                 new ApiError(`No document for this id ${req.params.id}`, 404)
             );
         }
+
+        // Trigger "save" event when update document
+        document.save();
+
         res.status(200).json({
             [Model.modelName]: document
         });
