@@ -13,6 +13,10 @@ const orderRoute = require('./order_route');
 
 
 const mountRoutes = (app) => {
+
+    app.use('/', (req,res)=>{
+        res.status(200).send('hello');
+    });
     app.use('/api/v1/categories', categoryRoutes);
     app.use('/api/v1/subcategories', subCategoryRoute);
     app.use('/api/v1/brands', brandRoute);
