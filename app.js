@@ -6,16 +6,19 @@ const express = require('express');
 const ApiError = require('./utils/api_error');
 const globalError = require('./middlewares/error_middleware');
 
-const cors = require('cors');
-const compression = require('compression');
+const {webhookCheckout} = require('./services/order_service');
 
-// Routes
-const mountRoutes = require('./routes');
 
 // db connection
 require('./config/database')();
 
 const app = express();
+
+// Routes
+const mountRoutes = require('./routes');
+
+const cors = require('cors');
+const compression = require('compression');
 
 // Enable other domains to access your application
 app.use(cors());
@@ -23,6 +26,13 @@ app.options('*', cors());
 
 // compress all responses
 app.use(compression());
+
+// Checkout webhook
+app.post(
+    '/webhook-checkout',
+    express.raw({type: 'application/json'}),
+    webhookCheckout
+);
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'uploads')));
@@ -45,7 +55,7 @@ app.use(globalError);
 
 const PORT = process.env.PORT || 3000;
 
-const server =  app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}...`);
 });
 
