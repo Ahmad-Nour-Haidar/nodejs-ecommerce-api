@@ -2,6 +2,10 @@ const path = require("path");
 
 const rateLimit = require('express-rate-limit');
 
+const mongoSanitize = require('express-mongo-sanitize');
+
+const xss = require("xss");
+
 const hpp = require('hpp');
 
 require('dotenv').config();
@@ -45,6 +49,10 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
     console.log(`Mode: ${process.env.NODE_ENV}`);
 }
+
+// To remove data using these defaults:
+app.use(mongoSanitize());
+app.use(xss());
 
 // Limit each IP to 100 requests per `window` (here, per 15 minutes)
 const limiter = rateLimit({
