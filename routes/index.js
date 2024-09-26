@@ -14,9 +14,8 @@ const orderRoute = require('./order_route');
 
 const mountRoutes = (app) => {
 
-    app.use('/', (req,res)=>{
-        res.status(200).send('hello');
-    });
+
+
     app.use('/api/v1/categories', categoryRoutes);
     app.use('/api/v1/subcategories', subCategoryRoute);
     app.use('/api/v1/brands', brandRoute);
@@ -29,6 +28,10 @@ const mountRoutes = (app) => {
     app.use('/api/v1/coupons', couponRoute);
     app.use('/api/v1/cart', cartRoute);
     app.use('/api/v1/orders', orderRoute);
+
+    app.use('/', (req,res)=>{
+        res.status(200).send('hello');
+    });
 };
 
 module.exports = mountRoutes;
