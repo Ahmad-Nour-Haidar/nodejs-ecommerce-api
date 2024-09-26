@@ -27,13 +27,7 @@ const mountRoutes = (app) => {
     app.use('/api/v1/orders', orderRoute);
 
     app.use('/', (req,res)=>{
-        let uri;
-        if (process.env.NODE_ENV !== 'production') {
-            uri = process.env.MONGODB_URI;
-        } else {
-            uri = process.env.MONGODB_URI_REMOTE;
-        }
-        res.status(200).send(`hello ${uri}`);
+        res.status(200).send('hello');
     });
 };
 
