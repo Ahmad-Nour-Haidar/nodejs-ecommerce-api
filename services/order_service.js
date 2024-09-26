@@ -1,3 +1,5 @@
+const stripe = require('stripe')(process.env.STRIPE_SECRET);
+
 const asyncHandler = require('express-async-handler');
 const factory = require('./handlers_factory');
 const ApiError = require('../utils/api_error');
@@ -112,4 +114,58 @@ exports.updateOrderToDelivered = asyncHandler(async (req, res, next) => {
     await order.save();
 
     res.status(200).json({status: 'success', order});
+});
+
+// @desc    Get checkout session from stripe and send it as response
+// @route   GET /api/v1/orders/checkout-session/:cartId
+// @access  Protected/User
+exports.checkoutSession = asyncHandler(async (req, res, next) => {
+    // app settings
+    const taxPrice = 0;
+    const shippingPrice = 0;
+
+    // 1) Get cart depend on cartId
+    const cart = await Cart.findById(req.params.cartId);
+    if (!cart) {
+        return next(
+            new ApiError(`There is no such cart with id ${req.params.cartId}`, 404)
+        );
+    }
+
+    // 2) Get order price depend on cart price "Check if coupon apply"
+    const cartPrice = cart.totalPriceAfterDiscount ?? cart.totalCartPrice;
+
+    const totalOrderPrice = cartPrice + taxPrice + shippingPrice;
+
+    // 3) Create stripe checkout session
+    const session = await stripe.checkout.sessions.create({
+        line_items: [
+            {
+                // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                price: 'price_1Q3GflGg4RO8r7S1tWbEUvKW',
+                quantity: 1,
+            },
+            // {
+            //     price_data: {
+            //         currency: 'usd',
+            //         // product_data: {
+            //         //     name: 'T-shirt',
+            //         //     description: 'Comfortable cotton t-shirt',
+            //         // },
+            //         // unit_amount: 2000, // Amount in cents (e.g., 2000 is $20.00)
+            //     },
+            //     quantity: 1,
+            //     // name: req.user.name,
+            // },
+        ],
+        mode: 'payment',
+        success_url: `${req.protocol}://${req.get('host')}/orders`,
+        cancel_url: `${req.protocol}://${req.get('host')}/cart`,
+        customer_email: req.user.email,
+        client_reference_id: req.params.cartId,
+        metadata: req.body.shippingAddress,
+    });
+
+    // 4) send session to response
+    res.status(200).json({status: 'success', session});
 });
