@@ -156,7 +156,7 @@ exports.applyCoupon = asyncHandler(async (req, res, next) => {
     });
 
     if (!coupon) {
-        return next(new ApiError(`Coupon is invalid or expired`,400));
+        return next(new ApiError(`Coupon is invalid or expired`, 400));
     }
 
     // 2) Get logged user cart to get total cart price
