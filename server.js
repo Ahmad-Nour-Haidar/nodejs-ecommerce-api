@@ -6,6 +6,9 @@ const express = require('express');
 const ApiError = require('./utils/api_error');
 const globalError = require('./middlewares/error_middleware');
 
+const cors = require('cors');
+const compression = require('compression');
+
 // Routes
 const mountRoutes = require('./routes');
 
@@ -13,6 +16,13 @@ const mountRoutes = require('./routes');
 require('./config/database')();
 
 const app = express();
+
+// Enable other domains to access your application
+app.use(cors());
+app.options('*', cors());
+
+// compress all responses
+app.use(compression());
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'uploads')));
