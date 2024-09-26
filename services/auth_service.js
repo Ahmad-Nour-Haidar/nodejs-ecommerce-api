@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const ApiError = require('../utils/api_error');
 const sendEmail = require('../utils/send_email');
+const {sanitizeUser} = require('../utils/sanitize_data');
 const User = require('../models/user_model');
 
 // @desc    Signup
@@ -22,7 +23,7 @@ exports.signup = asyncHandler(async (req, res) => {
     // 2- Generate token
     const token = user.createToken();
 
-    res.status(201).json({user, token});
+    res.status(201).json({user: sanitizeUser(user), token});
 });
 
 // @desc    Login
@@ -40,7 +41,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     const token = user.createToken();
 
     // 4) send response to client side
-    res.status(200).json({user, token});
+    res.status(200).json({user: sanitizeUser(user), token});
 });
 
 // @desc   make sure the user is logged in
