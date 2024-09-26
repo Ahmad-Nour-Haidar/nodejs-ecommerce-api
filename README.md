@@ -60,68 +60,68 @@ integration.
    ```
 3. Create a `.env` file in the root directory with the following:
 
-```dotenv
-# Environment Variables
+   ```dotenv
+   # Environment Variables
 
-# The port on which the server will run
-PORT=3000
-# Environment setting: 'development' or 'production'
-NODE_ENV=development
-#NODE_ENV=production
+   # The port on which the server will run
+   PORT=3000
+   # Environment setting: 'development' or 'production'
+   NODE_ENV=development
+   #NODE_ENV=production
 
-# MongoDB credentials and connection details
+   # MongoDB credentials and connection details
 
-# Database username for MongoDB
-DB_USER=
+   # Database username for MongoDB
+   DB_USER=
 
-# Database password for MongoDB
-DB_PASSWORD=
+   # Database password for MongoDB
+   DB_PASSWORD=
 
-# Name of the database
-DB_NAME=nodejs-ecommerce-api
+   # Name of the database
+   DB_NAME=nodejs-ecommerce-api
 
-# Base URL for the application
-BASE_URL=http://localhost:3000/
+   # Base URL for the application
+   BASE_URL=http://localhost:3000/
 
-# Local MongoDB connection URI
-MONGODB_URI=mongodb://127.0.0.1:27017/udemy-ecommerce
+   # Local MongoDB connection URI
+   MONGODB_URI=mongodb://127.0.0.1:27017/udemy-ecommerce
 
-# Remote MongoDB connection URI (Atlas Cluster)
-MONGODB_URI_REMOTE=
+   # Remote MongoDB connection URI (Atlas Cluster)
+   MONGODB_URI_REMOTE=
 
-# JWT (JSON Web Token) secret and expiration time
+   # JWT (JSON Web Token) secret and expiration time
 
-# Secret key for signing JWTs
-JWT_SECRET_KEY=
+   # Secret key for signing JWTs
+   JWT_SECRET_KEY=
 
-# Expiration time for JWTs
-JWT_EXPIRE_TIME=90d
+   # Expiration time for JWTs
+   JWT_EXPIRE_TIME=90d
 
-# Email Settings
+   # Email Settings
 
-# Email used for sending emails
-EMAIL_USER=
+   # Email used for sending emails
+   EMAIL_USER=
 
-# Email account password (should be securely stored)
-EMAIL_PASSWORD=
+   # Email account password (should be securely stored)
+   EMAIL_PASSWORD=
 
-# "From" email address used when sending emails
-EMAIL=
+   # "From" email address used when sending emails
+   EMAIL=
 
-# SMTP host for sending emails
-EMAIL_HOST=smtp.gmail.com
+   # SMTP host for sending emails
+   EMAIL_HOST=smtp.gmail.com
 
-# SMTP port for secure email transmission
-EMAIL_PORT=465
+   # SMTP port for secure email transmission
+   EMAIL_PORT=465
 
-# Stripe Configuration
+   # Stripe Configuration
 
-# Stripe secret for payments
-STRIPE_SECRET=
+   # Stripe secret for payments
+   STRIPE_SECRET=
 
-# Webhook secret for Stripe
-STRIPE_WEBHOOK_SECRET=
-```
+   # Webhook secret for Stripe
+   STRIPE_WEBHOOK_SECRET=
+   ```
 
 4. Start the server:
    ```bash
