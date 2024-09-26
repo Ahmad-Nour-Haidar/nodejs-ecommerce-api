@@ -2,7 +2,6 @@ const asyncHandler = require('express-async-handler');
 const factory = require('./handlers_factory');
 const ApiError = require('../utils/api_error');
 
-const User = require('../models/user_model');
 const Product = require('../models/product_model');
 const Cart = require('../models/cart_model');
 const Order = require('../models/order_model');
@@ -68,3 +67,49 @@ exports.findAllOrders = factory.getAll(Order);
 // @route   POST /api/v1/orders
 // @access  Protected/User-Admin-Manager
 exports.findSpecificOrder = factory.getOne(Order);
+
+// @desc    Update order paid status to paid
+// @route   PUT /api/v1/orders/:id/pay
+// @access  Protected/Admin-Manager
+exports.updateOrderToPaid = asyncHandler(async (req, res, next) => {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+        return next(
+            new ApiError(
+                `There is no such a order with this id: ${req.params.id}`,
+                404
+            )
+        );
+    }
+
+    // update order to paid
+    order.isPaid = true;
+    order.paidAt = Date.now();
+
+    await order.save();
+
+    res.status(200).json({status: 'success', order});
+});
+
+// @desc    Update order delivered status
+// @route   PUT /api/v1/orders/:id/deliver
+// @access  Protected/Admin-Manager
+exports.updateOrderToDelivered = asyncHandler(async (req, res, next) => {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+        return next(
+            new ApiError(
+                `There is no such a order with this id:${req.params.id}`,
+                404
+            )
+        );
+    }
+
+    // update order to paid
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+
+    await order.save();
+
+    res.status(200).json({status: 'success', order});
+});

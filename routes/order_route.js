@@ -4,6 +4,8 @@ const {
     filterOrderForLoggedUser,
     findAllOrders,
     findSpecificOrder,
+    updateOrderToPaid,
+    updateOrderToDelivered,
 } = require('../services/order_service');
 
 const authService = require('../services/auth_service');
@@ -22,5 +24,16 @@ router.get(
 );
 
 router.get('/:id', findSpecificOrder);
+
+router.put(
+    '/:id/pay',
+    authService.allowedTo('admin', 'manager'),
+    updateOrderToPaid
+);
+router.put(
+    '/:id/deliver',
+    authService.allowedTo('admin', 'manager'),
+    updateOrderToDelivered
+);
 
 module.exports = router;
