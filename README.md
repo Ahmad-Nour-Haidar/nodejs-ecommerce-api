@@ -47,81 +47,81 @@ integration.
 ## 🛠️ Installation
 
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/Ahmad-Nour-Haidar/nodejs-ecommerce-api.git
+   ```bash
+   git clone https://github.com/Ahmad-Nour-Haidar/nodejs-ecommerce-api.git
    ```
-   ```
-    cd nodejs-ecommerce-api
+   ```bash
+   cd nodejs-ecommerce-api
    ```
 
 2. Install dependencies:
-   ```
-    npm install
+   ```bash
+   npm install
    ```
 3. Create a `.env` file in the root directory with the following:
-   ```dotenv
-   # Environment Variables
-   
-   # The port on which the server will run
-   PORT=3000
 
-   # Environment setting: 'development' or 'production'
-   NODE_ENV=development
-   #NODE_ENV=production
+```dotenv
+# Environment Variables
 
-   # MongoDB credentials and connection details
+# The port on which the server will run
+PORT=3000
+# Environment setting: 'development' or 'production'
+NODE_ENV=development
+#NODE_ENV=production
 
-   # Database username for MongoDB
-   DB_USER=
+# MongoDB credentials and connection details
 
-   # Database password for MongoDB
-   DB_PASSWORD=
+# Database username for MongoDB
+DB_USER=
 
-   # Name of the database
-   DB_NAME=nodejs-ecommerce-api
+# Database password for MongoDB
+DB_PASSWORD=
 
-   # Base URL for the application
-   BASE_URL=http://localhost:3000/
+# Name of the database
+DB_NAME=nodejs-ecommerce-api
 
-   # Local MongoDB connection URI
-   MONGODB_URI=mongodb://127.0.0.1:27017/udemy-ecommerce
+# Base URL for the application
+BASE_URL=http://localhost:3000/
 
-   # Remote MongoDB connection URI (Atlas Cluster)
-   MONGODB_URI_REMOTE=
+# Local MongoDB connection URI
+MONGODB_URI=mongodb://127.0.0.1:27017/udemy-ecommerce
 
-   # JWT (JSON Web Token) secret and expiration time
+# Remote MongoDB connection URI (Atlas Cluster)
+MONGODB_URI_REMOTE=
 
-   # Secret key for signing JWTs
-   JWT_SECRET_KEY=
+# JWT (JSON Web Token) secret and expiration time
 
-   # Expiration time for JWTs
-   JWT_EXPIRE_TIME=90d
+# Secret key for signing JWTs
+JWT_SECRET_KEY=
 
-   # Email Settings
+# Expiration time for JWTs
+JWT_EXPIRE_TIME=90d
 
-   # Email used for sending emails
-   EMAIL_USER=
+# Email Settings
 
-   # Email account password (should be securely stored)
-   EMAIL_PASSWORD=
+# Email used for sending emails
+EMAIL_USER=
 
-   # "From" email address used when sending emails
-   EMAIL=
+# Email account password (should be securely stored)
+EMAIL_PASSWORD=
 
-   # SMTP host for sending emails
-   EMAIL_HOST=smtp.gmail.com
+# "From" email address used when sending emails
+EMAIL=
 
-   # SMTP port for secure email transmission
-   EMAIL_PORT=465
+# SMTP host for sending emails
+EMAIL_HOST=smtp.gmail.com
 
-   # Stripe Configuration
+# SMTP port for secure email transmission
+EMAIL_PORT=465
 
-   # Stripe secret for payments
-   STRIPE_SECRET=
+# Stripe Configuration
 
-   # Webhook secret for Stripe
-   STRIPE_WEBHOOK_SECRET=
-   ```
+# Stripe secret for payments
+STRIPE_SECRET=
+
+# Webhook secret for Stripe
+STRIPE_WEBHOOK_SECRET=
+```
 
 4. Start the server:
    ```bash
