@@ -46,19 +46,19 @@ integration.
 
 ## 🛠️ Installation
 
-1. Clone the repository:
+1. **Clone the repository**:
    ```bash
    git clone https://github.com/Ahmad-Nour-Haidar/nodejs-ecommerce-api.git
    ```
+2. **Navigate to the project directory**:
    ```bash
    cd nodejs-ecommerce-api
    ```
-
-2. Install dependencies:
+3. **Install dependencies**:
    ```bash
    npm install
    ```
-3. Create a `.env` file in the root directory with the following:
+4. **Create a `.env` file in the root directory with the following**:
 
    ```dotenv
    # Environment Variables
@@ -123,7 +123,7 @@ integration.
    STRIPE_WEBHOOK_SECRET=
    ```
 
-4. Start the server:
+5. **Start the server**:
    ```bash
    nodemon app.js
    ```
