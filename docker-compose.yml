@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  db:
+    image: mongo:6.0
+    container_name: ecommerce-db
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=nodejs-ecommerce-api
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  api:
+    build: .
+    container_name: ecommerce-api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - MONGODB_URI=mongodb://db:27017/nodejs-ecommerce-api
+      # Add other necessary env vars here or use an .env file
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  mongodb_data:
